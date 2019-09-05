@@ -24,6 +24,32 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
+    func testGetRecentEngagement() {
+        let expectation = self.expectation(description: "Send")
+
+        Rock.API.send(GetRecentEngagement(streakTypeID: 5, personID: 540527)) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testGetStreaks() {
+        let expectation = self.expectation(description: "Send")
+        
+        Rock.API.send(GetStreaks(streakTypeID: 5, personAliasId: 220324)) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                expectation.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+    }
+    
     func testGetStreakTypes() {
         let expectation = self.expectation(description: "Send")
         
@@ -63,20 +89,6 @@ final class RockAPIClientTests: XCTestCase {
                 expectation.fulfill()
             case .failure(let error):
                 assert(error.localizedDescription == "The streak already exists")
-                expectation.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testGetRecentEngagement() {
-        let expectation = self.expectation(description: "Send")
-
-        Rock.API.send(GetRecentEngagement(streakTypeID: 5, personID: 540527)) { result in
-            if case .success(let list) = result {
-                print(list)
-                assert(list.count > 0)
                 expectation.fulfill()
             }
         }

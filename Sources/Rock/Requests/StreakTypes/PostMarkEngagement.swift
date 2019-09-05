@@ -8,5 +8,6 @@ struct PostMarkEngagement: APIRequest {
     var path: String { return "api/StreakTypes/MarkEngagement/\(streakTypeID)" }
     
     let streakTypeID: Int
+    
     let locationID: Int
 }

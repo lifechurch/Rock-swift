@@ -8,5 +8,6 @@ struct GetRecentEngagement: APIRequest {
     var path: String { return "api/StreakTypes/RecentEngagement/\(streakTypeID)/\(personID)" }
     
     let streakTypeID: Int
+    
     let personID: Int
 }

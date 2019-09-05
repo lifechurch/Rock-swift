@@ -69,6 +69,8 @@ class RockAPIClient: APIClient {
                 completion(.failure(RockError(message: message)))
             } else if let error = error {
                 completion(.failure(error))
+            } else {
+                completion(.failure(RockError(message: "Error")))
             }
         }
         task.resume()
