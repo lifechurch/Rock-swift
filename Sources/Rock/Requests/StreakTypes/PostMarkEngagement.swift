@@ -1,6 +1,6 @@
 import Foundation
 
-struct PostMarkEngagement: APIRequest {
+public struct PostMarkEngagement: APIRequest {
     typealias Response = Empty
     
     var method: HTTPMethod { return .post }

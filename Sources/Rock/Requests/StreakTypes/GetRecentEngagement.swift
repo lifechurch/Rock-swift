@@ -1,6 +1,6 @@
 import Foundation
 
-struct GetRecentEngagement: APIRequest {
+public struct GetRecentEngagement: APIRequest {
     typealias Response = [Engagement?]
 
     var method: HTTPMethod { return .get }

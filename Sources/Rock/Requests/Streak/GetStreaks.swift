@@ -1,6 +1,6 @@
 import Foundation
 
-struct GetStreaks: APIRequest {
+public struct GetStreaks: APIRequest {
     typealias Response = [Streak]
 
     var method: HTTPMethod { return .get }

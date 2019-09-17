@@ -1,6 +1,6 @@
 import Foundation
 
-struct PostEnroll: APIRequest {
+public struct PostEnroll: APIRequest {
     typealias Response = Int
 
     var method: HTTPMethod { return .post }

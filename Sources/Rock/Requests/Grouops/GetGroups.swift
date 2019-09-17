@@ -1,6 +1,6 @@
 import Foundation
 
-struct GetGroups: APIRequest {
+public struct GetGroups: APIRequest {
     typealias Response = [Group]
 
     var method: HTTPMethod { return .get }
