@@ -1,6 +1,6 @@
 import Foundation
 
-struct Engagement: Codable {
-    let dateTime: String
-    let hasEngagement: Bool
+public struct Engagement: Codable {
+    public let dateTime: String
+    public let hasEngagement: Bool
 }

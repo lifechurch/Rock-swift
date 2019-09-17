@@ -1,7 +1,7 @@
 import Foundation
 
-struct StreakType: Codable {
-    let id: Int
-    let name: String
-    let isActive: Bool
+public struct StreakType: Codable {
+    public let id: Int
+    public let name: String
+    public let isActive: Bool
 }

@@ -1,7 +1,7 @@
 import Foundation
 
-struct Group: Codable {
-    let id: Int
-    let name: String
-    let campus: Campus?
+public struct Group: Codable {
+    public let id: Int
+    public let name: String
+    public let campus: Campus?
 }
