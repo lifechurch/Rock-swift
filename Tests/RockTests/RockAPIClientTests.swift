@@ -40,7 +40,7 @@ final class RockAPIClientTests: XCTestCase {
     func testGetStreaks() {
         let expectation = self.expectation(description: "Send")
         
-        Rock.API.send(GetStreaks(personAliasId: 220324)) { result in
+        Rock.API.send(GetStreaks(personAliasID: 220324)) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 expectation.fulfill()

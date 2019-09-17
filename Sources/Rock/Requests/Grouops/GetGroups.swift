@@ -3,7 +3,7 @@ import Foundation
 public struct GetGroups: APIRequest {
     public typealias Response = [Group]
 
-    public var method: HTTPMethod { return .get }
+    public var method: HTTPMethod { .get }
 
     public var path: String {
         let parameters: [String: String] = [
@@ -12,4 +12,6 @@ public struct GetGroups: APIRequest {
         ]
         return "api/Groups?\(parameters.urlQueryEscaped)"
     }
+    
+    public init() { }
 }
