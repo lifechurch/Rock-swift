@@ -1,11 +1,11 @@
 import Foundation
 
 public struct GetCampuses: APIRequest {
-    typealias Response = [Campus]
+    public typealias Response = [Campus]
     
-    var method: HTTPMethod { return .get }
+    public var method: HTTPMethod { return .get }
     
-    var path: String {
+    public var path: String {
         let parameters: [String: String] = ["$expand": "Location"]
         return "api/Campuses?\(parameters.urlQueryEscaped)"
     }

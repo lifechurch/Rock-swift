@@ -3,10 +3,10 @@ import Foundation
 import Combine
 #endif
 
-class RockAPIClient: APIClient {
-    var baseURL: URL?
+public class RockAPIClient: APIClient {
+    public var baseURL: URL?
     
-    var token: String?
+    public var token: String?
     
     lazy var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -16,7 +16,7 @@ class RockAPIClient: APIClient {
         return decoder
     }()
     
-    private func urlRequest<T: APIRequest>(from request: T) -> URLRequest? {
+    func urlRequest<T: APIRequest>(from request: T) -> URLRequest? {
         guard let url = URL(string: request.path, relativeTo: baseURL) else {
             return nil
         }
@@ -43,7 +43,7 @@ class RockAPIClient: APIClient {
         return urlRequest
     }
     
-    func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) {
+    public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) {
         guard let urlRequest = self.urlRequest(from: request) else {
             completion(.failure(APIError.invalidURL))
             return
@@ -78,7 +78,7 @@ class RockAPIClient: APIClient {
     
     #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    func publisher<T: APIRequest>(_ request: T) -> AnyPublisher<T.Response, Error>? {
+    public func publisher<T: APIRequest>(_ request: T) -> AnyPublisher<T.Response, Error>? {
         guard let urlRequest = self.urlRequest(from: request) else {
             return nil
         }

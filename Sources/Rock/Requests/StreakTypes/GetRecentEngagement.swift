@@ -1,11 +1,11 @@
 import Foundation
 
 public struct GetRecentEngagement: APIRequest {
-    typealias Response = [Engagement?]
+    public typealias Response = [Engagement?]
 
-    var method: HTTPMethod { return .get }
+    public var method: HTTPMethod { return .get }
 
-    var path: String {
+    public var path: String {
         return "api/StreakTypes/RecentEngagement/\(streakTypeID)/\(personID)"
     }
     

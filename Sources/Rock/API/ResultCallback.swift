@@ -1,3 +1,3 @@
 import Foundation
 
-typealias ResultCallback<Value> = (Result<Value, Error>) -> Void
+public typealias ResultCallback<Value> = (Result<Value, Error>) -> Void

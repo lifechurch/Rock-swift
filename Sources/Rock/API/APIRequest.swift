@@ -1,6 +1,6 @@
 import Foundation
 
-protocol APIRequest: Encodable {
+public protocol APIRequest: Encodable {
     associatedtype Response: Decodable
     
     var path: String { get }

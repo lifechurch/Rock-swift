@@ -1,5 +1,5 @@
 import Foundation
 
-protocol APIResponse: Decodable {
+public protocol APIResponse: Decodable {
     
 }

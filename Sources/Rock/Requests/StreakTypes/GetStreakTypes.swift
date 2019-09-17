@@ -1,9 +1,9 @@
 import Foundation
 
 public struct GetStreakTypes: APIRequest {
-    typealias Response = [StreakType]
+    public typealias Response = [StreakType]
 
-    var method: HTTPMethod { return .get }
+    public var method: HTTPMethod { return .get }
 
-    var path: String { return "api/StreakTypes" }
+    public var path: String { return "api/StreakTypes" }
 }

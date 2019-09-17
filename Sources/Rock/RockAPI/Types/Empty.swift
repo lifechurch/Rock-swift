@@ -1,8 +1,6 @@
 import Foundation
 
-struct Empty: Decodable {
-    
-    init() { }
-    
-    init(from decoder: Decoder) throws { }
+public struct Empty: Decodable {
+    public init() { }
+    public init(from decoder: Decoder) throws { }
 }

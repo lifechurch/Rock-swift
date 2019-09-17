@@ -1,9 +1,9 @@
 import Foundation
 
-struct RockError: LocalizedError {
+public struct RockError: LocalizedError {
     let message: String
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         return message
     }
 }

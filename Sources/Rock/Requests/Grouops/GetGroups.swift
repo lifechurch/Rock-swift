@@ -1,11 +1,11 @@
 import Foundation
 
 public struct GetGroups: APIRequest {
-    typealias Response = [Group]
+    public typealias Response = [Group]
 
-    var method: HTTPMethod { return .get }
+    public var method: HTTPMethod { return .get }
 
-    var path: String {
+    public var path: String {
         let parameters: [String: String] = [
             "$filter": "Name eq 'App Attendance' and Campus ne null",
             "$expand": "Campus/Location",

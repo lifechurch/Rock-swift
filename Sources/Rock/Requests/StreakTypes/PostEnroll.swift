@@ -1,11 +1,11 @@
 import Foundation
 
 public struct PostEnroll: APIRequest {
-    typealias Response = Int
+    public typealias Response = Int
 
-    var method: HTTPMethod { return .post }
+    public var method: HTTPMethod { return .post }
 
-    var path: String { return "api/StreakTypes/Enroll/\(streakTypeID)" }
+    public var path: String { return "api/StreakTypes/Enroll/\(streakTypeID)" }
     
     public let streakTypeID: Int
 }
