@@ -7,9 +7,9 @@ public struct PostMarkEngagement: APIRequest {
 
     var path: String { return "api/StreakTypes/MarkEngagement/\(streakTypeID)" }
     
-    let streakTypeID: Int
+    public let streakTypeID: Int
     
-    let groupID: Int
+    public let groupID: Int
     
-    let locationID: Int
+    public let locationID: Int
 }

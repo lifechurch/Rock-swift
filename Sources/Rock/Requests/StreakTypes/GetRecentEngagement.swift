@@ -9,7 +9,7 @@ public struct GetRecentEngagement: APIRequest {
         return "api/StreakTypes/RecentEngagement/\(streakTypeID)/\(personID)"
     }
     
-    let streakTypeID: Int
+    public let streakTypeID: Int
     
-    let personID: Int
+    public let personID: Int
 }

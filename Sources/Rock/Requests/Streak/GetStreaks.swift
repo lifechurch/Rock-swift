@@ -13,5 +13,5 @@ public struct GetStreaks: APIRequest {
         return "api/Streaks?\(parameters.urlQueryEscaped)"
     }
         
-    let personAliasId: Int
+    public let personAliasId: Int
 }

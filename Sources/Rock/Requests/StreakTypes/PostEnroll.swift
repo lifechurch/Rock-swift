@@ -7,5 +7,5 @@ public struct PostEnroll: APIRequest {
 
     var path: String { return "api/StreakTypes/Enroll/\(streakTypeID)" }
     
-    let streakTypeID: Int
+    public let streakTypeID: Int
 }
