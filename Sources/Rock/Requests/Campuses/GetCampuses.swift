@@ -5,5 +5,8 @@ struct GetCampuses: APIRequest {
     
     var method: HTTPMethod { return .get }
     
-    var path: String { return "api/Campuses?$expand=Location" }
+    var path: String {
+        let parameters: [String: String] = ["$expand": "Location"]
+        return "api/Campuses?\(parameters.urlQueryEscaped)"
+    }
 }

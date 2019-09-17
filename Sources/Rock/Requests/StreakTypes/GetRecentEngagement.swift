@@ -5,7 +5,9 @@ struct GetRecentEngagement: APIRequest {
 
     var method: HTTPMethod { return .get }
 
-    var path: String { return "api/StreakTypes/RecentEngagement/\(streakTypeID)/\(personID)" }
+    var path: String {
+        return "api/StreakTypes/RecentEngagement/\(streakTypeID)/\(personID)"
+    }
     
     let streakTypeID: Int
     

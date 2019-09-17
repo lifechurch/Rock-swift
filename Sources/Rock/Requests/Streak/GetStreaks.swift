@@ -5,9 +5,13 @@ struct GetStreaks: APIRequest {
 
     var method: HTTPMethod { return .get }
 
-    var path: String { return "api/Streaks?$filter=StreakTypeId%20eq%20\(streakTypeID)%20and%20PersonAliasId%20eq%20\(personAliasId)" }
-    
-    let streakTypeID: Int
-    
+    var path: String {
+        let parameters: [String: String] = [
+            "$filter": "PersonAliasId eq \(personAliasId)",
+            "$expand": "StreakType",
+        ]
+        return "api/Streaks?\(parameters.urlQueryEscaped)"
+    }
+        
     let personAliasId: Int
 }

@@ -24,29 +24,42 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-    func testGetRecentEngagement() {
+    func testGetGroups() {
         let expectation = self.expectation(description: "Send")
-
-        Rock.API.send(GetRecentEngagement(streakTypeID: 5, personID: 540527)) { result in
+        
+        Rock.API.send(GetGroups()) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 expectation.fulfill()
             }
         }
-
+        
         waitForExpectations(timeout: 10)
     }
     
     func testGetStreaks() {
         let expectation = self.expectation(description: "Send")
         
-        Rock.API.send(GetStreaks(streakTypeID: 5, personAliasId: 220324)) { result in
+        Rock.API.send(GetStreaks(personAliasId: 220324)) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 expectation.fulfill()
             }
         }
         
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testGetRecentEngagement() {
+        let expectation = self.expectation(description: "Send")
+
+        Rock.API.send(GetRecentEngagement(streakTypeID: 18, personID: 540527)) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                expectation.fulfill()
+            }
+        }
+
         waitForExpectations(timeout: 10)
     }
     
@@ -66,7 +79,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostEnroll() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostEnroll(streakTypeID: 5)) { result in
+        Rock.API.send(PostEnroll(streakTypeID: 17)) { result in
             switch result {
             case .success(let id):
                 print(id)
@@ -83,7 +96,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostMarkEngagement() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostMarkEngagement(streakTypeID: 5, locationID: 113)) { result in
+        Rock.API.send(PostMarkEngagement(streakTypeID: 18, groupID: 2276359, locationID: 15)) { result in
             switch result {
             case .success:
                 expectation.fulfill()

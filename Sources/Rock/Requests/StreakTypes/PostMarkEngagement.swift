@@ -9,5 +9,7 @@ struct PostMarkEngagement: APIRequest {
     
     let streakTypeID: Int
     
+    let groupID: Int
+    
     let locationID: Int
 }
