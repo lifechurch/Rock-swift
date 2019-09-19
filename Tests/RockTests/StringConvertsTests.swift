@@ -9,6 +9,7 @@ final class StringConvertsTests: XCTestCase {
         ("Name", "name"),
         ("ShortCode", "shortCode"),
         ("LocationId", "locationID"),
+        ("StreakIds", "streakIDs"),
         ("IsActive", "isActive"),
     ]
     

@@ -1,14 +1,18 @@
 import Foundation
 
-let suffixesWithAllUppcases = ["Id", "Guid"]
+let suffixConversionDictionary: [String: String] = [
+    "Id": "ID",
+    "Ids": "IDs",
+    "Guid": "GUID",
+]
 
 extension String {
     func toSwiftKey() -> String {
         var result = prefix(1).lowercased() + dropFirst()
                 
-        for suffix in suffixesWithAllUppcases {
-            if result.hasSuffix(suffix) {
-                result = result.dropLast(suffix.count) + suffix.uppercased()
+        for entry in suffixConversionDictionary {
+            if result.hasSuffix(entry.key) {
+                result = result.dropLast(entry.key.count) + entry.value
             }
         }
         
@@ -18,9 +22,9 @@ extension String {
     func toRockKey() -> String {
         var result = prefix(1).uppercased() + dropFirst()
                 
-        for suffix in suffixesWithAllUppcases {
-            if result.hasSuffix(suffix.uppercased()) {
-                result = result.dropLast(suffix.count) + suffix.capitalized
+        for entry in suffixConversionDictionary {
+            if result.hasSuffix(entry.value) {
+                result = result.dropLast(entry.value.count) + entry.key
             }
         }
         
