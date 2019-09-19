@@ -63,6 +63,20 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
+    func testGetStreakData() {
+        let expectation = self.expectation(description: "Send")
+
+        Rock.API.send(GetStreakData(streakTypeIDs: [17, 18])) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                assert(list.first?.perFrequencyUnit.count ?? 0 > 0)
+                expectation.fulfill()
+            }
+        }
+            
+        waitForExpectations(timeout: 10)
+    }
+    
     func testGetStreakTypes() {
         let expectation = self.expectation(description: "Send")
         
