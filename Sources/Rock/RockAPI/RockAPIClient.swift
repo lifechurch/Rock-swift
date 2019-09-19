@@ -43,9 +43,9 @@ public class RockAPIClient: APIClient {
         return urlRequest
     }
     
-    public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) {
+    public func send<T: APIRequest>(_ request: T, completion: ResultCallback<T.Response>? = nil) {
         guard let urlRequest = self.urlRequest(from: request) else {
-            completion(.failure(APIError.invalidURL))
+            completion?(.failure(APIError.invalidURL))
             return
         }
         
@@ -59,18 +59,18 @@ public class RockAPIClient: APIClient {
                     } else {
                         do {
                             let result = try self.decoder.decode(T.Response.self, from: data)
-                            completion(.success(result))
+                            completion?(.success(result))
                         } catch {
-                            completion(.failure(error))
+                            completion?(.failure(error))
                         }
                     }
                 }
             } else if let message = data?.errorMessage {
-                completion(.failure(RockError(message: message)))
+                completion?(.failure(RockError(message: message)))
             } else if let error = error {
-                completion(.failure(error))
+                completion?(.failure(error))
             } else {
-                completion(.failure(RockError(message: "Error")))
+                completion?(.failure(RockError(message: "Error")))
             }
         }
         task.resume()
