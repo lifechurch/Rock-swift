@@ -7,11 +7,15 @@ public struct GetGroups: APIRequest {
 
     public var path: String {
         let parameters: [String: String] = [
-            "$filter": "Name eq 'App Attendance' and Campus ne null",
+            "$filter": "Name eq '\(name)' and Campus ne null",
             "$expand": "Campus/Location",
         ]
         return "api/Groups?\(parameters.urlQueryEscaped)"
     }
     
-    public init() { }
+    public let name: String
+    
+    public init(name: String) {
+        self.name = name
+    }
 }

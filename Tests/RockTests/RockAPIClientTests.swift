@@ -27,39 +27,13 @@ final class RockAPIClientTests: XCTestCase {
     func testGetGroups() {
         let expectation = self.expectation(description: "Send")
         
-        Rock.API.send(GetGroups()) { result in
+        Rock.API.send(GetGroups(name: "App Attendance")) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 expectation.fulfill()
             }
         }
         
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testGetStreaks() {
-        let expectation = self.expectation(description: "Send")
-        
-        Rock.API.send(GetStreaks(personAliasID: 220324)) { result in
-            if case .success(let list) = result {
-                assert(list.count > 0)
-                expectation.fulfill()
-            }
-        }
-        
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testGetRecentEngagement() {
-        let expectation = self.expectation(description: "Send")
-
-        Rock.API.send(GetRecentEngagement(streakTypeID: 18, personID: 540527)) { result in
-            if case .success(let list) = result {
-                assert(list.count > 0)
-                expectation.fulfill()
-            }
-        }
-
         waitForExpectations(timeout: 10)
     }
     
@@ -111,11 +85,7 @@ final class RockAPIClientTests: XCTestCase {
         let expectation = self.expectation(description: "Send")
 
         Rock.API.send(PostMarkEngagement(streakTypeID: 18, groupID: 2276359, locationID: 15)) { result in
-            switch result {
-            case .success:
-                expectation.fulfill()
-            case .failure(let error):
-                assert(error.localizedDescription == "The streak already exists")
+            if case .success = result {
                 expectation.fulfill()
             }
         }
@@ -146,6 +116,5 @@ final class RockAPIClientTests: XCTestCase {
         ("testGetStreakTypes", testGetStreakTypes),
         ("testPostEnroll", testPostEnroll),
         ("testPostMarkEngagement", testPostMarkEngagement),
-        ("testGetRecentEngagement", testGetRecentEngagement),
     ]
 }
