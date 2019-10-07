@@ -43,7 +43,7 @@ final class RockAPIClientTests: XCTestCase {
         Rock.API.send(GetStreakData(streakTypeIDs: [17, 18])) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
-                assert(list.first?.perFrequencyUnit.count ?? 0 > 0)
+                assert(list.first?.engagementsThisYear ?? 0 > 0)
                 expectation.fulfill()
             }
         }
