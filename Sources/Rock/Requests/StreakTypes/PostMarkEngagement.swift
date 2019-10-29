@@ -5,7 +5,7 @@ public struct PostMarkEngagement: APIRequest {
     
     public var method: HTTPMethod { .post }
 
-    public var path: String { "api/StreakTypes/MarkEngagement/\(streakTypeID)" }
+    public var path: String { "api/StreakTypes/MarkEngagement/\(streakTypeID)?groupID=\(groupID)&locationID=\(locationID)" }
     
     public let streakTypeID: Int
     

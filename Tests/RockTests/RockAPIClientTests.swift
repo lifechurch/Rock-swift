@@ -84,7 +84,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostMarkEngagement() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostMarkEngagement(streakTypeID: 18, groupID: 2276359, locationID: 15)) { result in
+        Rock.API.send(PostMarkEngagement(streakTypeID: 18, groupID: 2276395, locationID: 18)) { result in
             if case .success = result {
                 expectation.fulfill()
             }
