@@ -92,6 +92,18 @@ final class RockAPIClientTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
     }
+    
+    func testGetInteractionStatistics() {
+        let expectation = self.expectation(description: "Send")
+
+        Rock.API.send(GetInteractionStatistics(interactionChannelGUID: nil, interactionComponentGUID: nil)) { result in
+            if case .success = result {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10)
+    }
 
     #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
