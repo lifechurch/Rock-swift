@@ -93,6 +93,18 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
+    func testGetInteractionComponent() {
+        let expectation = self.expectation(description: "Send")
+
+        Rock.API.send(GetInteractionComponent(guid: <#guid#>)) { result in
+            if case .success = result {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10)
+    }
+    
     func testGetInteractionStatistics() {
         let expectation = self.expectation(description: "Send")
 
