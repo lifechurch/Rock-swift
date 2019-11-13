@@ -108,7 +108,7 @@ final class RockAPIClientTests: XCTestCase {
     func testGetInteractionStatistics() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetInteractionStatistics(interactionChannelGUID: <#interactionChannelGUID#>, interactionComponentGUID: <#interactionComponentGUID#>)) { result in
+        Rock.API.send(GetInteractionStatistics(interactionChannelID: <#interactionChannelID#>, interactionComponentID: <#interactionComponentID#>)) { result in
             if case .success = result {
                 expectation.fulfill()
             }

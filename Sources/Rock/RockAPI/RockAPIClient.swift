@@ -29,13 +29,7 @@ public class RockAPIClient: APIClient {
         }
         
         if request.method == .post {
-            let parameters: [String: Codable] = Mirror(reflecting: request).children
-                .reduce(into: [:], { previous, child in
-                    if let key = child.label?.toRockKey(), let value = child.value as? Codable {
-                        previous[key] = value
-                    }
-                })
-            
+            let parameters = request.parameters
             if let data = try? JSONSerialization.data(withJSONObject: parameters, options: []), parameters.count > 0 {
                 urlRequest.httpBody = data
             }
