@@ -117,6 +117,22 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
+    func testIncrementInteractionStatistics() {
+        var interactionStatistics = InteractionStatistics(
+            interactionsAllTime: 5,
+            interactionsThatDay: 2,
+            interactionsThatMonth: 3,
+            interactionsThatYear: 4
+        )
+        
+        interactionStatistics.increment()
+        
+        assert(interactionStatistics.interactionsAllTime == 6)
+        assert(interactionStatistics.interactionsThatDay == 3)
+        assert(interactionStatistics.interactionsThatMonth == 4)
+        assert(interactionStatistics.interactionsThatYear == 5)
+    }
+    
     func testPostInteraction() {
         let expectation = self.expectation(description: "Send")
         
