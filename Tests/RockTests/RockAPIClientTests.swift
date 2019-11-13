@@ -40,7 +40,7 @@ final class RockAPIClientTests: XCTestCase {
     func testGetStreakData() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetStreakData(streakTypeIDs: [17, 18])) { result in
+        Rock.API.send(GetStreakData(streakTypeIDs: [<#strekTypeID#>])) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 assert(list.first?.engagementsThisYear ?? 0 > 0)
@@ -67,7 +67,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostEnroll() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostEnroll(streakTypeID: 17)) { result in
+        Rock.API.send(PostEnroll(streakTypeID: <#strekTypeID#>)) { result in
             switch result {
             case .success(let id):
                 print(id)
@@ -84,7 +84,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostMarkEngagement() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostMarkEngagement(streakTypeID: 18, groupID: 2276395, locationID: 18)) { result in
+        Rock.API.send(PostMarkEngagement(streakTypeID: <#strekTypeID#>, groupID: <#groupID#>, locationID: <#locationID#>)) { result in
             if case .success = result {
                 expectation.fulfill()
             }
@@ -96,7 +96,21 @@ final class RockAPIClientTests: XCTestCase {
     func testGetInteractionStatistics() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetInteractionStatistics(interactionChannelGUID: nil, interactionComponentGUID: nil)) { result in
+        Rock.API.send(GetInteractionStatistics(interactionChannelGUID: <#interactionChannelGUID#>, interactionComponentGUID: <#interactionComponentGUID#>)) { result in
+            if case .success = result {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testPostInteraction() {
+        let expectation = self.expectation(description: "Send")
+        
+        let request = PostInteraction(operation: "test", interactionComponentID: <#interactionComponentID#>, interactionSummary: "test", interactionData: "1", interactionDateTime: "2019-11-13T00:00:00.000Z", personAliasID: <#personAliasID#>)
+
+        Rock.API.send(request) { result in
             if case .success = result {
                 expectation.fulfill()
             }

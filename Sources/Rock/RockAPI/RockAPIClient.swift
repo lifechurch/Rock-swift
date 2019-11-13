@@ -25,6 +25,7 @@ public class RockAPIClient: APIClient {
         urlRequest.httpMethod = request.method.rawValue
         if let token = token {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
         if request.method == .post {
