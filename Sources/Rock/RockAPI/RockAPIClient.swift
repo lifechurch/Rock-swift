@@ -8,6 +8,12 @@ public class RockAPIClient: APIClient {
     
     public var token: String?
     
+    lazy var urlSession: URLSession = {
+        let urlSession = URLSession.shared
+        urlSession.configuration.urlCache = URLCache(memoryCapacity: 0, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        return urlSession
+    }()
+    
     lazy var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .custom({ keys in
@@ -38,28 +44,18 @@ public class RockAPIClient: APIClient {
         return urlRequest
     }
     
-    public func send<T: APIRequest>(_ request: T, completion: ResultCallback<T.Response>? = nil) {
+    public func send<T: APIRequest>(_ request: T, willUseCache: Bool = false, completion: ResultCallback<T.Response>? = nil) {
         guard let urlRequest = self.urlRequest(from: request) else {
             completion?(.failure(APIError.invalidURL))
             return
         }
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { [unowned self] data, response, error in
-            if let statusCode = (response as? HTTPURLResponse)?.statusCode, (200..<300).contains(statusCode) {
-                if let data = data {
-                    if let completion = completion as? ResultCallback<Int>, let idString = String(data: data, encoding: .utf8), let id = Int(idString) {
-                        completion(.success(id))
-                    } else if let completion = completion as? ResultCallback<Empty>, data.count == 0 {
-                        completion(.success(Empty()))
-                    } else {
-                        do {
-                            let result = try self.decoder.decode(T.Response.self, from: data)
-                            completion?(.success(result))
-                        } catch {
-                            completion?(.failure(error))
-                        }
-                    }
+        let task = urlSession.dataTask(with: urlRequest) { [weak self] data, response, error in
+            if let response = response, let data = data, let statusCode = (response as? HTTPURLResponse)?.statusCode, (200..<300).contains(statusCode) {
+                if willUseCache {
+                    self?.store(request: urlRequest, response: response, data: data)
                 }
+                self?.handle(request: request, data: data, completion: completion)
             } else if let message = data?.errorMessage {
                 completion?(.failure(RockError(message: message)))
             } else if let error = error {
@@ -68,7 +64,34 @@ public class RockAPIClient: APIClient {
                 completion?(.failure(RockError(message: "Error")))
             }
         }
+        
+        if willUseCache {
+            if let cachedResponse = urlSession.configuration.urlCache?.cachedResponse(for: urlRequest) {
+                handle(request: request, data: cachedResponse.data, completion: completion)
+            }
+        }
+        
         task.resume()
+    }
+    
+    private func store(request: URLRequest, response: URLResponse, data: Data) {
+        let cachedResponse = CachedURLResponse(response: response, data: data)
+        self.urlSession.configuration.urlCache?.storeCachedResponse(cachedResponse, for: request)
+    }
+    
+    private func handle<T: APIRequest>(request: T, data: Data, completion: ResultCallback<T.Response>? = nil) {
+        if let completion = completion as? ResultCallback<Int>, let idString = String(data: data, encoding: .utf8), let id = Int(idString) {
+            completion(.success(id))
+        } else if let completion = completion as? ResultCallback<Empty>, data.count == 0 {
+            completion(.success(Empty()))
+        } else {
+            do {
+                let result = try decoder.decode(T.Response.self, from: data)
+                completion?(.success(result))
+            } catch {
+                completion?(.failure(error))
+            }
+        }
     }
     
     #if canImport(Combine)
@@ -78,7 +101,7 @@ public class RockAPIClient: APIClient {
             return nil
         }
         
-        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+        return urlSession.dataTaskPublisher(for: urlRequest)
             .map { $0.data }
             .decode(type: T.Response.self, decoder: decoder)
             .eraseToAnyPublisher()
