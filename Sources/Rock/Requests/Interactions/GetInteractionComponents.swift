@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GetInteractionComponent: APIRequest {
+public struct GetInteractionComponents: APIRequest {
     public typealias Response = [InteractionComponent]
 
     public var method: HTTPMethod { .get }
