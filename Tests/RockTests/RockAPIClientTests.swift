@@ -3,12 +3,22 @@ import XCTest
 
 final class RockAPIClientTests: XCTestCase {
     
+    let domain = <#domain#>
+    let token = <#token#>
+    
+    let streakTypeID = <#streakTypeID#>
+    let groupID = <#groupID#>
+    let locationID = <#locationID#>
+    let interactionComponentGUID = <#interactionComponentGUID#>
+    let interactionComponentID = <#interactionComponentID#>
+    let personAliasID = <#personAliasID#>
+    
     override func setUp() {
         super.setUp()
 
-        Rock.configure(baseURL: URL(string: <#domain#>))
+        Rock.configure(baseURL: URL(string: domain))
 
-        Rock.assign(token: <#token#>)
+        Rock.assign(token: token)
     }
     
     func testGetCampuses() {
@@ -40,7 +50,7 @@ final class RockAPIClientTests: XCTestCase {
     func testGetStreakData() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetStreakData(streakTypeIDs: [<#strekTypeID#>])) { result in
+        Rock.API.send(GetStreakData(streakTypeIDs: [streakTypeID])) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 assert(list.first?.engagementsThisYear ?? 0 > 0)
@@ -67,7 +77,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostEnroll() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostEnroll(streakTypeID: <#strekTypeID#>)) { result in
+        Rock.API.send(PostEnroll(streakTypeID: streakTypeID)) { result in
             switch result {
             case .success(let id):
                 print(id)
@@ -84,7 +94,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostMarkEngagement() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(PostMarkEngagement(streakTypeID: <#strekTypeID#>, groupID: <#groupID#>, locationID: <#locationID#>)) { result in
+        Rock.API.send(PostMarkEngagement(streakTypeID: streakTypeID, groupID: groupID, locationID: locationID)) { result in
             if case .success = result {
                 expectation.fulfill()
             }
@@ -96,7 +106,7 @@ final class RockAPIClientTests: XCTestCase {
     func testGetInteractionComponents() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetInteractionComponents(guid: <#guid#>)) { result in
+        Rock.API.send(GetInteractionComponents(guid: interactionComponentGUID)) { result in
             if case .success(let list) = result {
                 print(list)
                 expectation.fulfill()
@@ -109,8 +119,9 @@ final class RockAPIClientTests: XCTestCase {
     func testGetInteractionStatistics() {
         let expectation = self.expectation(description: "Send")
 
-        Rock.API.send(GetInteractionStatistics(interactionChannelID: <#interactionChannelID#>, interactionComponentID: <#interactionComponentID#>)) { result in
-            if case .success = result {
+        Rock.API.send(GetInteractionStatistics(interactionChannelID: nil, interactionComponentID: nil)) { result in
+            if case .success(let data) = result {
+                print(data)
                 expectation.fulfill()
             }
         }
@@ -137,7 +148,7 @@ final class RockAPIClientTests: XCTestCase {
     func testPostInteraction() {
         let expectation = self.expectation(description: "Send")
         
-        let request = PostInteraction(operation: "test", interactionComponentID: <#interactionComponentID#>, interactionSummary: "test", interactionData: "1", interactionDateTime: "2019-11-13T00:00:00.000Z", personAliasID: <#personAliasID#>)
+        let request = PostInteraction(operation: "test", interactionComponentID: interactionComponentID, interactionSummary: "test", interactionData: "1", interactionDateTime: "2019-11-13T00:00:00.000Z", personAliasID: personAliasID)
 
         Rock.API.send(request) { result in
             if case .success = result {
