@@ -158,6 +158,26 @@ final class RockAPIClientTests: XCTestCase {
 
         waitForExpectations(timeout: 10)
     }
+    
+    func testCache() {
+        Rock.API.urlSession.configuration.urlCache?.removeAllCachedResponses()
+        
+        let request = GetGroups(name: "App Attendance")
+        
+        assert(Rock.API.load(request) == nil)
+        
+        let expectation = self.expectation(description: "Send")
+        
+        Rock.API.send(request) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                assert(Rock.API.load(request)!.count > 0)
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10)
+    }
 
     #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

@@ -9,7 +9,7 @@ public class RockAPIClient: APIClient {
     public var token: String?
     
     lazy var urlSession: URLSession = {
-        let configuration = URLSessionConfiguration()
+        let configuration = URLSessionConfiguration.default
         configuration.urlCache = URLCache(memoryCapacity: 0, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         return URLSession(configuration: configuration)
     }()
@@ -64,7 +64,10 @@ public class RockAPIClient: APIClient {
             } else {
                 result = .failure(RockError(message: "Error"))
             }
-            completion?(result)
+            
+            DispatchQueue.main.async {
+                completion?(result)
+            }
         }
         
         task.resume()
