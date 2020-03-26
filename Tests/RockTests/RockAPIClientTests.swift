@@ -12,6 +12,7 @@ final class RockAPIClientTests: XCTestCase {
     let interactionComponentGUID = <#interactionComponentGUID#>
     let interactionComponentID = <#interactionComponentID#>
     let personAliasID = <#personAliasID#>
+    let groupGUID = <#groupGUID#>
     
     override func setUp() {
         super.setUp()
@@ -34,10 +35,23 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-    func testGetGroups() {
+    func testGetGroupsByName() {
         let expectation = self.expectation(description: "Send")
         
         Rock.API.send(GetGroups(name: "App Attendance")) { result in
+            if case .success(let list) = result {
+                assert(list.count > 0)
+                expectation.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testGetGroupsByGUID() {
+        let expectation = self.expectation(description: "Send")
+        
+        Rock.API.send(GetGroups(guid: groupGUID)) { result in
             if case .success(let list) = result {
                 assert(list.count > 0)
                 expectation.fulfill()
