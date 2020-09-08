@@ -10,7 +10,7 @@ public struct GetInteractionComponents: APIRequest {
         if let guid = guid {
             parameters["$filter"] = "Guid eq guid'\(guid)'"
         }
-        parameters["$select"] = "Id,Guid,ChannelId,Name"
+        parameters["$select"] = "Id,Guid,Name"
         return "api/InteractionComponents?\(parameters.urlQueryEscaped)"
     }
     
