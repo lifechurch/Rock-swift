@@ -9,8 +9,6 @@ final class RockAPIClientTests: XCTestCase {
     let streakTypeID = <#streakTypeID#>
     let groupID = <#groupID#>
     let locationID = <#locationID#>
-    let interactionComponentGUID = <#interactionComponentGUID#>
-    let interactionComponentID = <#interactionComponentID#>
     let personAliasID = <#personAliasID#>
     let groupGUID = <#groupGUID#>
     
@@ -109,62 +107,6 @@ final class RockAPIClientTests: XCTestCase {
         let expectation = self.expectation(description: "Send")
 
         Rock.API.send(PostMarkEngagement(streakTypeID: streakTypeID, groupID: groupID, locationID: locationID)) { result in
-            if case .success = result {
-                expectation.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testGetInteractionComponents() {
-        let expectation = self.expectation(description: "Send")
-
-        Rock.API.send(GetInteractionComponents(guid: interactionComponentGUID)) { result in
-            if case .success(let list) = result {
-                print(list)
-                expectation.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testGetInteractionStatistics() {
-        let expectation = self.expectation(description: "Send")
-
-        Rock.API.send(GetInteractionStatistics(interactionChannelID: nil, interactionComponentID: nil)) { result in
-            if case .success(let data) = result {
-                print(data)
-                expectation.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-    
-    func testIncrementInteractionStatistics() {
-        var interactionStatistics = InteractionStatistics(
-            interactionsAllTime: 5,
-            interactionsThatDay: 2,
-            interactionsThatMonth: 3,
-            interactionsThatYear: 4
-        )
-        
-        interactionStatistics.increment()
-        
-        assert(interactionStatistics.interactionsAllTime == 6)
-        assert(interactionStatistics.interactionsThatDay == 3)
-        assert(interactionStatistics.interactionsThatMonth == 4)
-        assert(interactionStatistics.interactionsThatYear == 5)
-    }
-    
-    func testPostInteraction() {
-        let expectation = self.expectation(description: "Send")
-        
-        let request = PostInteraction(operation: "test", interactionComponentID: interactionComponentID, interactionSummary: "test", interactionData: "1", interactionDateTime: "2019-11-13T00:00:00.000Z", personAliasID: personAliasID)
-
-        Rock.API.send(request) { result in
             if case .success = result {
                 expectation.fulfill()
             }
