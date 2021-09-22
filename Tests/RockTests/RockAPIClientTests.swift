@@ -135,24 +135,6 @@ final class RockAPIClientTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
 
-    #if canImport(Combine)
-    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    func testPublisher() {
-        let expectation = self.expectation(description: "Publisher")
-
-        let cancellable = Rock.API.publisher(GetCampuses())?
-            .replaceError(with: [])
-            .sink(receiveValue: { list in
-                assert(list.count > 0)
-                expectation.fulfill()
-            })
-
-        waitForExpectations(timeout: 10)
-
-        cancellable?.cancel()
-    }
-    #endif
-
     static var allTests = [
         ("testGetCampuses", testGetCampuses),
         ("testGetStreakTypes", testGetStreakTypes),

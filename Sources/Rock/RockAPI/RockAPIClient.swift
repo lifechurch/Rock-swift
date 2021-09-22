@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(Combine)
-import Combine
-#endif
 
 public class RockAPIClient: APIClient {
     public var baseURL: URL?
@@ -94,18 +91,4 @@ public class RockAPIClient: APIClient {
         let cachedResponse = CachedURLResponse(response: response, data: data)
         urlSession.configuration.urlCache?.storeCachedResponse(cachedResponse, for: request)
     }
-    
-    #if canImport(Combine)
-    @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    public func publisher<T: APIRequest>(_ request: T) -> AnyPublisher<T.Response, Error>? {
-        guard let urlRequest = createRequest(from: request) else {
-            return nil
-        }
-        
-        return urlSession.dataTaskPublisher(for: urlRequest)
-            .map { $0.data }
-            .decode(type: T.Response.self, decoder: decoder)
-            .eraseToAnyPublisher()
-    }
-    #endif
 }
